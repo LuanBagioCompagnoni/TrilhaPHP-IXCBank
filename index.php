@@ -47,10 +47,10 @@ try {
     echo "Saldo Conta Corrente: " . $contaCorrente->getSaldo() . "\n";
 
     // Exibindo movimentações
-    foreach ($contaPoupanca->movimentacoes as $movimentacao) {
+    foreach ($contaPoupanca->getMovimentacoes() as $movimentacao) {
         $movimentacao->display();
     }
-    foreach ($contaCorrente->movimentacoes as $movimentacao) {
+    foreach ($contaCorrente->getMovimentacoes() as $movimentacao) {
         $movimentacao->display();
     }
 

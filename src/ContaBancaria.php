@@ -34,19 +34,24 @@ abstract class ContaBancaria {
 
     public function save() {
         $db = Database::getConnection();
+        $titularId = $this->titular->getId();
+        $saldo = $this->saldo;
+        $tipo = $this->tipo;
         $stmt = $db->prepare("INSERT INTO contas (titular_id, saldo, tipo) VALUES (:titular_id, :saldo, :tipo)");
-        $stmt->bindParam(':titular_id', $this->titular->getId());
-        $stmt->bindParam(':saldo', $this->saldo);
-        $stmt->bindParam(':tipo', $this->tipo);
+        $stmt->bindParam(':titular_id', $titularId);
+        $stmt->bindParam(':saldo', $saldo);
+        $stmt->bindParam(':tipo', $tipo);
         $stmt->execute();
         $this->id = $db->lastInsertId();
     }
 
     public function update() {
         $db = Database::getConnection();
+        $saldo = $this->saldo;
+        $id = $this->id;
         $stmt = $db->prepare("UPDATE contas SET saldo = :saldo WHERE id = :id");
-        $stmt->bindParam(':saldo', $this->saldo);
-        $stmt->bindParam(':id', $this->id);
+        $stmt->bindParam(':saldo', $saldo);
+        $stmt->bindParam(':id', $id);
         $stmt->execute();
     }
 
@@ -56,6 +61,10 @@ abstract class ContaBancaria {
 
     public function getTitular() {
         return $this->titular;
+    }
+
+    public function getMovimentacoes() {
+        return $this->movimentacoes;
     }
 }
 ?>

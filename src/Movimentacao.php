@@ -15,22 +15,30 @@ class Movimentacao {
 
     public function save() {
         $db = Database::getConnection();
+        $contaId = $this->conta_id;
+        $tipo = $this->tipo;
+        $quantia = $this->quantia;
+        $dataHora = $this->dataHora;
         $stmt = $db->prepare("INSERT INTO movimentacoes (conta_id, tipo, quantia, dataHora) VALUES (:conta_id, :tipo, :quantia, :dataHora)");
-        $stmt->bindParam(':conta_id', $this->conta_id);
-        $stmt->bindParam(':tipo', $this->tipo);
-        $stmt->bindParam(':quantia', $this->quantia);
-        $stmt->bindParam(':dataHora', $this->dataHora);
+        $stmt->bindParam(':conta_id', $contaId);
+        $stmt->bindParam(':tipo', $tipo);
+        $stmt->bindParam(':quantia', $quantia);
+        $stmt->bindParam(':dataHora', $dataHora);
         $stmt->execute();
         $this->id = $db->lastInsertId();
     }
 
     public function update() {
         $db = Database::getConnection();
+        $tipo = $this->tipo;
+        $quantia = $this->quantia;
+        $dataHora = $this->dataHora;
+        $id = $this->id;
         $stmt = $db->prepare("UPDATE movimentacoes SET tipo = :tipo, quantia = :quantia, dataHora = :dataHora WHERE id = :id");
-        $stmt->bindParam(':tipo', $this->tipo);
-        $stmt->bindParam(':quantia', $this->quantia);
-        $stmt->bindParam(':dataHora', $this->dataHora);
-        $stmt->bindParam(':id', $this->id);
+        $stmt->bindParam(':tipo', $tipo);
+        $stmt->bindParam(':quantia', $quantia);
+        $stmt->bindParam(':dataHora', $dataHora);
+        $stmt->bindParam(':id', $id);
         $stmt->execute();
     }
 
